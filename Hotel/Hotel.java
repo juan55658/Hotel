@@ -255,148 +255,7 @@ public class Hotel {
             }
         }
     }
-    //CheckIn
-    public void CheckIn() {
-        if (reservas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay reservas registradas.");
-            return;
-        }
 
-        // Mostrar reservas disponibles
-        StringBuilder sb = new StringBuilder("Reservas disponibles:\n\n");
-        for (Reserva r : reservas) {
-            sb.append(r.getIdReserva()).append(" - ")
-                    .append(r.getHuesped().getNombre()).append(" | Hab. ")
-                    .append(r.getHabitacion().getNumero()).append("\n");
-        }
-        JOptionPane.showMessageDialog(null, sb.toString());
-
-        // Pedir ID de reserva
-        int idReserva = Integer.parseInt(
-                JOptionPane.showInputDialog("Ingrese el ID de la reserva para hacer Check-in:"));
-
-        // Buscar la reserva
-        Reserva reserva = null;
-        for (Reserva r : reservas) {
-            if (r.getIdReserva() == idReserva) { reserva = r; break; }
-        }
-        if (reserva == null) {
-            JOptionPane.showMessageDialog(null, "Reserva no encontrada.");
-            return;
-        }
-
-        // Verificar que la habitación esté disponible
-        if (!reserva.getHabitacion().getDisponible()) {
-            JOptionPane.showMessageDialog(null, "Esta reserva ya tiene check-in activo.");
-            return;
-        }
-
-        // Marcar habitación como ocupada y crear factura vacía
-        reserva.getHabitacion().setDisponible(false);
-        Factura factura = new Factura(idReserva, reserva);
-        facturasActivas.add(factura);
-
-        JOptionPane.showMessageDialog(null,
-                "Check-in exitoso.\n" +
-                        "Huésped: " + reserva.getHuesped().getNombre() + "\n" +
-                        "Habitación " + reserva.getHabitacion().getNumero() + " ahora ocupada.");
-    }
-    private int contadorServicio = 0;
-    //CheckOut
-    public void CheckOut() {
-        if (facturasActivas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay check-ins activos.");
-            return;
-        }
-
-        // Mostrar facturas activas
-        StringBuilder sb = new StringBuilder("Check-ins activos:\n\n");
-        for (Factura f : facturasActivas) {
-            sb.append("Reserva #").append(f.getIdFactura())
-                    .append(" - ").append(f.getReserva().getHuesped().getNombre()).append("\n");
-        }
-        JOptionPane.showMessageDialog(null, sb.toString());
-
-        // Pedir ID de reserva y la buscamos
-        int idReserva = Integer.parseInt(
-                JOptionPane.showInputDialog("Ingrese el ID de la reserva para hacer Check-out:"));
-        Factura factura = null;
-        for (Factura f : facturasActivas) {
-            if (f.getIdFactura() == idReserva) { factura = f; break; }
-        }
-        if (factura == null) {
-            JOptionPane.showMessageDialog(null, "No hay check-in activo para esa reserva.");
-            return;
-        }
-
-        // Agregar servicios
-        boolean agregarMas = true;
-        while (agregarMas) {
-            int opcion = Integer.parseInt(JOptionPane.showInputDialog(
-                    "¿Desea agregar un servicio?\n" +
-                            "1. Room Service\n" +
-                            "2. Restaurante\n" +
-                            "3. Piscina\n" +
-                            "4. Gimnasio\n" +
-                            "5. Otro\n" +
-                            "6. No agregar más"));
-
-            if (opcion == 6) {
-                agregarMas = false;
-            } else {
-                String tipoServicio;
-                switch (opcion) {
-                    case 1 -> tipoServicio = "Room Service";
-                    case 2 -> tipoServicio = "Restaurante";
-                    case 3 -> tipoServicio = "Piscina";
-                    case 4 -> tipoServicio = "Gimnasio";
-                    default -> tipoServicio = JOptionPane.showInputDialog("Nombre del servicio:");
-                }
-
-                double precio   = Double.parseDouble(JOptionPane.showInputDialog("Precio unitario:"));
-                int    cantidad = Integer.parseInt(JOptionPane.showInputDialog("Cantidad:"));
-
-                Servicio servicio = new Servicio(++contadorServicio, tipoServicio, precio, cantidad);
-                factura.agregarServicio(servicio);
-                JOptionPane.showMessageDialog(null, "Servicio agregado: " + servicio.toString());
-            }
-        }
-        
-        // Liberar habitación
-        factura.getReserva().getHabitacion().setDisponible(true);
-
-        // Mostrar factura final
-        StringBuilder facturaSb = new StringBuilder();
-        facturaSb.append("======== FACTURA ========\n");
-        facturaSb.append("Fecha      : ").append(factura.getFechaEmision()).append("\n");
-        facturaSb.append("Huésped    : ").append(factura.getReserva().getHuesped().getNombre()).append("\n");
-        facturaSb.append("Documento  : ").append(factura.getReserva().getHuesped().getDocumento()).append("\n");
-        facturaSb.append("Habitación : ").append(factura.getReserva().getHabitacion().getNumero())
-                .append(" (").append(factura.getReserva().getHabitacion().getTipo()).append(")\n");
-        facturaSb.append("Noches     : ").append(factura.calcularNoches()).append("\n");
-        facturaSb.append("\n--- Servicios ---\n");
-
-        if (factura.getServicios().isEmpty()) {
-            facturaSb.append("  Ninguno\n");
-        } else {
-            for (Servicio s : factura.getServicios()) {
-                facturaSb.append("  ").append(s.toString()).append("\n");
-            }
-        }
-
-        facturaSb.append("\n-------------------------\n");
-        facturaSb.append("Habitación : $").append(factura.calcularTotalHabitacion()).append("\n");
-        facturaSb.append("Servicios  : $").append(factura.calcularTotalServicios()).append("\n");
-        facturaSb.append("TOTAL      : $").append(factura.calcularTotalFinal()).append("\n");
-
-        facturaSb.append("=========================");
-
-        JOptionPane.showMessageDialog(null, facturaSb.toString(), "Factura Final",
-                JOptionPane.INFORMATION_MESSAGE);
-
-        // Eliminar factura activa
-        facturasActivas.remove(factura);
-    }
     //Menu
     public boolean Control1 = true;
     public void MenuPrincipal() {
@@ -407,14 +266,16 @@ public class Hotel {
                     "\n3. Reservas" +
                     "\n4. CheckIn" +
                     "\n5. CheckOut" +
-                    "\n6. Salir"));
+                    "\n6. Servicios" +
+                    "\n7. Salir"));
             switch (Opcion) {
                 case 1 -> MenuHuespedes();
                 case 2 -> verHabitaciones(habitaciones);
                 case 3 -> MenuReservas();
-                case 4 -> CheckIn();
-                case 5 -> CheckOut();
-                case 6 -> Control1 = false;
+                case 4 -> CkeckIn.CheckInAhora(reservas,facturasActivas);
+                case 5 -> CheckOut.CheckOutAhora(facturasActivas);
+                case 6 -> Servicio.AgregarServicios(facturasActivas);
+                case 7 -> Control1 = false;
                 default -> JOptionPane.showMessageDialog(null,"ERROR");
             }
         }
