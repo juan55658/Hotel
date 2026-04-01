@@ -5,25 +5,21 @@ import Hotel.Hotel;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class Habitacion {
-    private int numero;
-    private String tipo;
-    private double precioPorNoche;
-    private boolean disponible;
+public abstract class Habitacion {
+    protected String tipo;
+    protected int numero;
+    protected double precioPorNoche;
+    protected boolean disponible;
 
-    public Habitacion(int numero, String tipo, double precioPorNoche, boolean disponible) {
-        this.numero = numero;
+    public Habitacion(String tipo ,int numero, double precioPorNoche, boolean disponible) {
         this.tipo = tipo;
+        this.numero = numero;
         this.precioPorNoche = precioPorNoche;
         setDisponible(disponible);
     }
-    public void MostrarInformacion() {
-        JOptionPane.showMessageDialog(null,"Numero: " + numero +
-                "\nTipo: " + tipo +
-                "\nPrecioPorNoche: " + precioPorNoche +
-                "\nDisponible: " + disponible);
 
-    }
+    public abstract void MostrarInformacion();
+
     @Override
     public String toString() {
         return "Numero: " + numero +

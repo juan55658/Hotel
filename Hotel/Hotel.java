@@ -117,19 +117,18 @@ public class Hotel {
     // Habitaciones
     public void cargarHabitaciones(ArrayList<Habitacion>habitaciones) {
 
-        habitaciones.add(new Habitacion(101, "Simple", 80000,true));
-        habitaciones.add(new Habitacion(102, "Simple", 80000,true));
-        habitaciones.add(new Habitacion(103, "Doble", 120000,true));
-        habitaciones.add(new Habitacion(201, "Doble", 120000,true));
-        habitaciones.add(new Habitacion(202, "Familiar", 150000,true));
-        habitaciones.add(new Habitacion(203, "Familiar", 150000,true));
-        habitaciones.add(new Habitacion(301, "Suite", 200000,true));
-        habitaciones.add(new Habitacion(302, "Suite", 200000,true));
-        habitaciones.add(new Habitacion(303, "Suite", 200000,true));
+        habitaciones.add(new HabitacionSimple(101, "Simple", 80000,true));
+        habitaciones.add(new HabitacionSimple(102, "Simple", 80000,true));
+        habitaciones.add(new HabitacionDoble(103, "Doble", 120000,true));
+        habitaciones.add(new HabitacionDoble(201, "Doble", 120000,true));
+        habitaciones.add(new HabitacionFamiliar(202, "Familiar", 150000,true));
+        habitaciones.add(new HabitacionFamiliar(203, "Familiar", 150000,true));
+        habitaciones.add(new HabitacionSuite(301, "Suite", 200000,true));
+        habitaciones.add(new HabitacionSuite(302, "Suite", 200000,true));
+        habitaciones.add(new HabitacionSuite(303, "Suite", 200000,true));
     }
     // ver habitaciones
     public void verHabitaciones(ArrayList<Habitacion>habitaciones) {
-        StringBuilder nb = new StringBuilder();
         for(Habitacion H: habitaciones) {
             H.MostrarInformacion();
         }
