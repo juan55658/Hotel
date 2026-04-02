@@ -9,17 +9,17 @@ public class Reserva {
     private Habitacion habitacion;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
-    private int numeroPersonas;
+    private Acompañante acompañante;
 
     public Reserva(int idReserva, Huesped huesped, Habitacion habitacion,
-                   LocalDate fechaEntrada, LocalDate fechaSalida, int numeroPersonas) {
+                   LocalDate fechaEntrada, LocalDate fechaSalida, Acompañante acompañante) {
 
         this.idReserva = idReserva;
         this.huesped = huesped;
         this.habitacion = habitacion;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.numeroPersonas = numeroPersonas;
+        this.acompañante = acompañante;
     }
     public void MostrarInformacion() {
         JOptionPane.showMessageDialog(null,"ID: " + getIdReserva() +
@@ -27,7 +27,7 @@ public class Reserva {
                 "\nHabitacion: " + getHabitacion().getNumero() +
                 "\nFecha entrada: " + getFechaEntrada() +
                 "\nFecha Salida: " + getFechaSalida() +
-                "\nNumero de personas: " + getNumeroPersonas());
+                "\nAcompañante: " + acompañante.getNombre());
     }
     @Override
     public String toString() {
@@ -36,7 +36,7 @@ public class Reserva {
                 "\nHabitación: " + habitacion.getNumero() +
                 "\nEntrada: " + fechaEntrada +
                 "\nSalida: " + fechaSalida +
-                "\nPersonas: " + numeroPersonas +
+                "\nAcompañantes: " + acompañante.getNombre() +
                 "\n------------------------";
     }
     public int getIdReserva() {return idReserva;}
@@ -44,12 +44,12 @@ public class Reserva {
     public Habitacion getHabitacion() {return habitacion;}
     public LocalDate getFechaEntrada() {return fechaEntrada;}
     public LocalDate getFechaSalida() {return fechaSalida;}
-    public int getNumeroPersonas() {return numeroPersonas;}
+    public Acompañante getAcompañante() {return acompañante;}
 
     public void setIdReserva(int Idreserva) {this.idReserva = Idreserva;}
     public void setHuesped(Huesped huesped) {this.huesped = huesped;}
     public void setHabitacion(Habitacion habitacion) {this.habitacion = habitacion;}
     public void setFechaEntrada(LocalDate fechaEntrada) {this.fechaEntrada = fechaEntrada;}
     public void setFechaSalida(LocalDate fechaSalida) {this.fechaSalida = fechaSalida;}
-    public void setNumeroPersonas(int numeroPersonas) {this.numeroPersonas = numeroPersonas;}
+    public void setAcompañante(int numeroPersonas) {this.acompañante = acompañante;}
 }

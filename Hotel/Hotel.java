@@ -220,10 +220,18 @@ public class Hotel {
             JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
         }
 
+        //Crear acompañantes
+        Acompañante h = null;
+        for(int i = 0; i < personas; i++) {
+             h = new Acompañante(i);
+             h.MostrarInformacion();
+        }
+
+
         // Crear reserva y agregarla
         int idReserva = reservas.size() + 1;
         Reserva reserva = new Reserva(idReserva, huesped, habitacion,
-                fechaEntrada, fechaSalida, personas);
+                fechaEntrada, fechaSalida, h);
         reservas.add(reserva);
         JOptionPane.showMessageDialog(null, "Reserva #" + idReserva + " creada exitosamente.");
     }
