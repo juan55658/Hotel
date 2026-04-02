@@ -209,6 +209,17 @@ public class Hotel {
         // Pedir número de personas
         int personas = Integer.parseInt(JOptionPane.showInputDialog("Número de personas:"));
 
+        //verificar si habitacion coincide con el numero de personas
+        if ((numHab == 101 || numHab == 102) && personas != 1 ) {
+            JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
+        } else if ((numHab == 103 || numHab == 201) && personas != 2) {
+            JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
+        } else if ((numHab == 202 || numHab == 203) && (personas < 3 || personas > 4)) {
+            JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
+        } else if ((numHab == 301 || numHab == 302 || numHab == 303) &&  (personas < 5 || personas > 10)) {
+            JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
+        }
+
         // Crear reserva y agregarla
         int idReserva = reservas.size() + 1;
         Reserva reserva = new Reserva(idReserva, huesped, habitacion,
