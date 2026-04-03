@@ -207,31 +207,32 @@ public class Hotel {
         }
 
         // Pedir número de personas
-        int personas = Integer.parseInt(JOptionPane.showInputDialog("Número de personas:"));
+        int personas = Integer.parseInt(JOptionPane.showInputDialog("Número de acompañantes:"));
 
         //verificar si habitacion coincide con el numero de personas
-        if ((numHab == 101 || numHab == 102) && personas != 1 ) {
+        if ((numHab == 101 || numHab == 102) && personas != 0 ) {
             JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
-        } else if ((numHab == 103 || numHab == 201) && personas != 2) {
+        } else if ((numHab == 103 || numHab == 201) && personas != 1) {
             JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
-        } else if ((numHab == 202 || numHab == 203) && (personas < 3 || personas > 4)) {
+        } else if ((numHab == 202 || numHab == 203) && (personas < 2 || personas > 3)) {
             JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
-        } else if ((numHab == 301 || numHab == 302 || numHab == 303) &&  (personas < 5 || personas > 10)) {
+        } else if ((numHab == 301 || numHab == 302 || numHab == 303) &&  (personas < 4 || personas > 9)) {
             JOptionPane.showMessageDialog(null,"Ingrese una habitacion valida para el numero de personas");
         }
 
         //Crear acompañantes
-        Acompañante h = null;
-        for(int i = 0; i < personas; i++) {
-             h = new Acompañante(i);
-             h.MostrarInformacion();
+        ArrayList<Acompañante> acompañantes = new ArrayList<>();
+        for (int i = 0; i < personas; i++) {
+            Acompañante a = new Acompañante(i + 1);
+            acompañantes.add(a);
+            a.MostrarInformacion();
         }
 
 
         // Crear reserva y agregarla
         int idReserva = reservas.size() + 1;
         Reserva reserva = new Reserva(idReserva, huesped, habitacion,
-                fechaEntrada, fechaSalida, h);
+                fechaEntrada, fechaSalida, acompañantes);
         reservas.add(reserva);
         JOptionPane.showMessageDialog(null, "Reserva #" + idReserva + " creada exitosamente.");
     }

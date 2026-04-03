@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Acompañante extends Persona {
     private String Parentesco;
     public Acompañante(int id) {
-        super(id +1);
+        super(id);
         setParentesco(JOptionPane.showInputDialog("Ingrese su parentezco con el familiar: "));
     }
 
