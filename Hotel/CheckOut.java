@@ -66,13 +66,72 @@ public class CheckOut {
         facturaSb.append("Habitación : $").append(factura.calcularTotalHabitacion()).append("\n");
         facturaSb.append("Servicios  : $").append(factura.calcularTotalServicios()).append("\n");
         facturaSb.append("TOTAL      : $").append(factura.calcularTotalFinal()).append("\n");
-
         facturaSb.append("=========================");
 
         JOptionPane.showMessageDialog(null, facturaSb.toString(), "Factura Final",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        // Eliminar factura activa
+// Menu de pagos
+        boolean pagado = false;
+        while (!pagado) {
+            int metodoPago = Integer.parseInt(JOptionPane.showInputDialog(
+                    "Total a pagar: $" + factura.calcularTotalFinal() +
+                            "\n\nSeleccione método de pago:" +
+                            "\n 1. Efectivo" +
+                            "\n 2. Tarjeta de crédito/débito" +
+                            "\n 3. Cancelar (volver)"));
+
+            switch (metodoPago) {
+                case 1 -> {
+                    double montoEntregado = Double.parseDouble(
+                            JOptionPane.showInputDialog("Ingrese el monto entregado: $"));
+
+                    if (montoEntregado < factura.calcularTotalFinal()) {
+                        JOptionPane.showMessageDialog(null,
+                                "Monto insuficiente. Faltan: $" +
+                                        (factura.calcularTotalFinal() - montoEntregado));
+                    } else {
+                        double cambio = montoEntregado - factura.calcularTotalFinal();
+                        JOptionPane.showMessageDialog(null,
+                                "✔ Pago en efectivo exitoso.\n" +
+                                        "Monto entregado: $" + montoEntregado + "\n" +
+                                        "Cambio          : $" + cambio);
+                        pagado = true;
+                    }
+                }
+                case 2 -> {
+                    String numeroTarjeta = JOptionPane.showInputDialog("Ingrese el número de tarjeta (16 dígitos):");
+                    if (numeroTarjeta == null || numeroTarjeta.length() != 16) {
+                        JOptionPane.showMessageDialog(null, "Número de tarjeta inválido.");
+                        break;
+                    }
+                    String nombreTarjeta = JOptionPane.showInputDialog("Nombre en la tarjeta:");
+                    String vencimiento   = JOptionPane.showInputDialog("Fecha de vencimiento (MM/AA):");
+                    String cvv           = JOptionPane.showInputDialog("CVV:");
+
+                    if (nombreTarjeta == null || vencimiento == null || cvv == null ||
+                            nombreTarjeta.isEmpty() || vencimiento.isEmpty() || cvv.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Datos de tarjeta incompletos.");
+                        break;
+                    }
+
+                    JOptionPane.showMessageDialog(null,
+                            "✔ Pago con tarjeta exitoso.\n" +
+                                    "Tarjeta: **** **** **** " + numeroTarjeta.substring(12) + "\n" +
+                                    "Monto cobrado: $" + factura.calcularTotalFinal());
+                    pagado = true;
+                }
+                case 3 -> {
+                    JOptionPane.showMessageDialog(null, "Pago cancelado. La factura sigue activa.");
+                    return; // sale sin eliminar la factura
+                }
+                default -> JOptionPane.showMessageDialog(null, "Opción inválida.");
+            }
+        }
+
+    // Solo se elimina si se pagó
+        factura.getReserva().getHabitacion().setDisponible(true);
         facturasActivas.remove(factura);
+        JOptionPane.showMessageDialog(null, "Check-out completado. Habitación liberada.");
     }
 }
