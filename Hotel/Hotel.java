@@ -223,7 +223,7 @@ public class Hotel {
         //Crear acompañantes
         ArrayList<Acompañante> acompañantes = new ArrayList<>();
         for (int i = 0; i < personas; i++) {
-            Acompañante a = new Acompañante(i + 1);
+            Acompañante a = new Acompañante(i);
             acompañantes.add(a);
             a.MostrarInformacion();
         }
@@ -243,6 +243,7 @@ public class Hotel {
         } else {
             StringBuilder nb = new StringBuilder();
             for(Reserva R: reservas) {
+                JOptionPane.showMessageDialog(null,"Datos de la reserva: ");
                 R.MostrarInformacion();
             }
         }

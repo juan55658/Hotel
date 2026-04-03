@@ -23,12 +23,18 @@ public class Reserva {
         this.acompañantes = acompañantes;
     }
     public void MostrarInformacion() {
-        JOptionPane.showMessageDialog(null,"ID: " + getIdReserva() +
-                "\nHuesped: " + getHuesped().getNombre() +
-                "\nHabitacion: " + getHabitacion().getNumero() +
-                "\nFecha entrada: " + getFechaEntrada() +
-                "\nFecha Salida: " + getFechaSalida() +
-                "\nAcompañantes: " + getAcompañantes());
+        StringBuilder acomp = new StringBuilder();
+        for (Acompañante a : getAcompañantes()) {
+            acomp.append(a.toString());
+        }
+
+        JOptionPane.showMessageDialog(null,
+                "ID: " + getIdReserva() +
+                        "\nHuesped: " + getHuesped().getNombre() +
+                        "\nHabitacion: " + getHabitacion().getNumero() +
+                        "\nFecha entrada: " + getFechaEntrada() +
+                        "\nFecha Salida: " + getFechaSalida() +
+                        "\nAcompañantes: " + acomp);
     }
     @Override
     public String toString() {
@@ -37,7 +43,7 @@ public class Reserva {
                 "\nHabitación: " + habitacion.getNumero() +
                 "\nEntrada: " + fechaEntrada +
                 "\nSalida: " + fechaSalida +
-                "\nAcompañantes: " + acompañantes +
+                "\nAcompañantes( " + acompañantes + " )" +
                 "\n------------------------";
     }
     public int getIdReserva() {return idReserva;}

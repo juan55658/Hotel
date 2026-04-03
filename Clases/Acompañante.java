@@ -30,6 +30,16 @@ public class Acompañante extends Persona {
         setParentesco(JOptionPane.showInputDialog("Ingrese el nuevo parentesco: "));
     }
 
+    @Override
+    public String toString() {
+        return ("Nombre: " + getNombre() +
+                "\nDocumento: " + getDocumento() +
+                "\nEdad: " + getEdad() +
+                "\nTelefono: " + getTelefono() +
+                "\nEmail: " + getEmail() +
+                "\nParentesco : " + getParentesco());
+    }
+
     public String getParentesco() {
         return Parentesco;
     }
